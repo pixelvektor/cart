@@ -30,3 +30,4 @@
 - OpenCV 3.x
 - Raspbian Jessie (Kernel 3.10)
 - soll das Auto und dessen Richtung erkennen
+- http://www.instructables.com/id/RasPi-OpenCV-Face-Tracking/
