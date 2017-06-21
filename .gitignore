@@ -11,3 +11,5 @@
 !*.pdf
 !*.aep
 !*.mov
+!*.cpp
+!*.py
