@@ -13,3 +13,6 @@
 !*.mov
 !*.cpp
 !*.py
+
+# ignore paths explicit
+cmake-build-debug
