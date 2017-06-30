@@ -1,37 +1,49 @@
-// Source: http://pklab.net/index.php?lang=EN&id=392
-#include <stdio.h>
+// Source: https://stackoverflow.com/questions/13709274/reading-video-from-file-opencv
+// http://docs.opencv.org/3.1.0/d8/dfe/classcv_1_1VideoCapture.html
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+//#include <opencv2/videoio/videoio.hpp>
 #include <opencv2/opencv.hpp>
-#include <opencv2/highgui.hpp>
+//#include <iostream>
 
 using namespace cv;
-using namespace std;
+//using namespace std;
 
-int main(int argc,char ** argv)
+int main(int, char**)
 {
-    VideoCapture cap(0);
-    if (!cap.isOpened()) {
-        cerr << "ERROR: Unable to open the camera" << endl;
-        return 0;
-    }
+    String path = "../../res/testvideo/";
+    String filename = "test_v0.mov";
+    String fullFilename = path + filename;
 
+    VideoCapture capture(fullFilename);
     Mat frame;
-    cout << "Start grabbing, press a key on Live window to terminate" << endl;
-    while(1) {
-        cap >> frame;
-        if (frame.empty()) {
-            cerr << "ERROR: Unable to grab from the camera" << endl;
-            break;
-        }
-        imshow("Live",frame);
-        int key = cv::waitKey(5);
-        key = (key==255) ? -1 : key; //#Solve bug in 3.2.0
-        if (key>=0)
-            break;
-    }
 
-    cout << "Closing the camera" << endl;
-    cap.release();
-    destroyAllWindows();
-    cout << "bye!" <<endl;
-    return 0;
+    if ( !capture.isOpened() )
+        throw "Fehler beim Lesen der Datei" + fullFilename;
+
+//    Mat edges;
+//    namedWindow("edges",1);
+//    for(;;)
+//    {
+//        Mat frame;
+//        capture >> frame;
+//        cvtColor(frame, edges, COLOR_BGR2GRAY);
+//        GaussianBlur(edges, edges, Size(7,7),1.5,1.5);
+//        Canny(edges, edges, 0, 30, 3);
+//        imshow("edges", edges);
+//        if(waitKey(30) >= 0) break;
+//    }
+//    return 0;
+
+
+    namedWindow( "w", 1 );
+    for ( ; ; )
+    {
+        capture >> frame;
+        if (frame.empty())
+            break;
+        imshow("w", frame);
+        waitKey(20);
+    }
+    waitKey(0);
 }
