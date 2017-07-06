@@ -72,22 +72,22 @@ int main() {
 
                 //if(!currentPosition.empty())
                 //{
-                double cPosX = currentPosition[0];
-                double cPosY = currentPosition[1];
-                cout << "current position is " << cPosX << "/" << cPosY << endl;
-
-                double deltaPosX = tPosX - cPosX;
-                double deltaPosY = tPosY - cPosY;
-
-                vector<double> deltaVector = {deltaPosX, deltaPosY};
+//                double cPosX = currentPosition[0];
+//                double cPosY = currentPosition[1];
+//                cout << "current position is " << cPosX << "/" << cPosY << endl;
+//
+//                double deltaPosX = tPosX - cPosX;
+//                double deltaPosY = tPosY - cPosY;
+//
+//                vector<double> deltaVector = {deltaPosX, deltaPosY};
 
                 //checks position of x.
-                if (cPosX > innerLeftUpX) {
-                    if (cPosX < innerRightUpX) {
+                if (tPosX > innerLeftUpX) {
+                    if (tPosX < innerRightUpX) {
                         //xOk
                         moveDegreeX = 0;
                     } else {
-                        if (cPosX < outerRightUpX) {
+                        if (tPosX < outerRightUpX) {
                             //xSlowPositive
                             moveDegreeX = 3;
                         } else {
@@ -96,7 +96,7 @@ int main() {
                         }
                     }
                 } else {
-                    if (cPosX > outerLeftUpX) {
+                    if (tPosX > outerLeftUpX) {
                         //xSlowNegative
                         moveDegreeX = -3;
                     } else {
@@ -106,12 +106,12 @@ int main() {
                 }
 
                 //checks position of y.
-                if (cPosY > innerLeftUpY) {
-                    if (cPosY < innerLeftDownY) {
+                if (tPosY > innerLeftUpY) {
+                    if (tPosY < innerLeftDownY) {
                         //YOK
                         moveDegreeY = 0;
                     } else {
-                        if (cPosY < outerLeftDownY) {
+                        if (tPosY < outerLeftDownY) {
                             //ySlowNegative
                             moveDegreeY = -3;
                         } else {
@@ -120,7 +120,7 @@ int main() {
                         }
                     }
                 } else {
-                    if (cPosY > outerLeftUpY) {
+                    if (tPosY > outerLeftUpY) {
                         //ySlowPositive
                         moveDegreeY = 3;
                     } else {
