@@ -6,7 +6,7 @@
 #include "main.h"
 
 vector<float> currentPosition;
-bool servoMoveable= true;
+bool servoMovable= true;
 
 int main() {
     Testcam testcam;
@@ -39,7 +39,7 @@ int main() {
         }
 
         while (testcam.isConnected()) {
-            if (testcam.targetFound()&&servoMoveable) {
+            if (testcam.targetFound()&&servoMovable) {
                 vector<float> v = testcam.getTargetPosition();
                 float tPosX = v[0];
                 float tPosY = v[1];
@@ -109,7 +109,7 @@ int main() {
                 if (degreeToPw(currentDegreeX+moveDegreeX,currentDegreeY+moveDegreeY)!=0){
 
                 }else{
-                    servoMoveable= false;
+                    servoMovable= false;
                 }
                 //}
             }
