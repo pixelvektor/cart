@@ -2,14 +2,12 @@
 // Created by Adrian on 24.06.2017.
 //
 
-#include <stdio.h>
-#include <pigpio.h>
+#include "move_test.h"
 
 int maxPwX=1000;
 int minPwX=2500;
 int maxPwY=1000;
 int minPwY=2500;
-
 
 int main(int argc, char *argv[])
 {

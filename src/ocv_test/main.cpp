@@ -9,6 +9,7 @@ vector<float> currentPosition;
 
 int main() {
     Testcam testcam;
+
     while (true) {
         //TODO: get position of camera or set it to auto 0/0
         currentPosition = {0, 0};
@@ -31,6 +32,10 @@ int main() {
                 float deltaPosY = tPosY - cPosY;
 
                 vector<float> deltaVector = {deltaPosX, deltaPosY};
+
+
+                //TODO: Gradzahlen übergeben
+                degreeToPw(2,2);
                 //}
             }
         }
