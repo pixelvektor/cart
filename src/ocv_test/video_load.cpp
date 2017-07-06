@@ -1,49 +1,26 @@
-// Source: https://stackoverflow.com/questions/13709274/reading-video-from-file-opencv
-// http://docs.opencv.org/3.1.0/d8/dfe/classcv_1_1VideoCapture.html
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-//#include <opencv2/videoio/videoio.hpp>
-#include <opencv2/opencv.hpp>
-//#include <iostream>
+// Source: http://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html#videocapture
+#include "opencv2/opencv.hpp"
 
 using namespace cv;
-//using namespace std;
 
 int main(int, char**)
 {
-    String path = "../../res/testvideo/";
-    String filename = "test_v0.mov";
-    String fullFilename = path + filename;
+    VideoCapture cap(0); // open the default camera
+    if(!cap.isOpened())  // check if we succeeded
+        return -1;
 
-    VideoCapture capture(fullFilename);
-    Mat frame;
-
-    if ( !capture.isOpened() )
-        throw "Fehler beim Lesen der Datei" + fullFilename;
-
-//    Mat edges;
-//    namedWindow("edges",1);
-//    for(;;)
-//    {
-//        Mat frame;
-//        capture >> frame;
-//        cvtColor(frame, edges, COLOR_BGR2GRAY);
-//        GaussianBlur(edges, edges, Size(7,7),1.5,1.5);
-//        Canny(edges, edges, 0, 30, 3);
-//        imshow("edges", edges);
-//        if(waitKey(30) >= 0) break;
-//    }
-//    return 0;
-
-
-    namedWindow( "w", 1 );
-    for ( ; ; )
+    Mat edges;
+    namedWindow("edges",1);
+    for(;;)
     {
-        capture >> frame;
-        if (frame.empty())
-            break;
-        imshow("w", frame);
-        waitKey(20);
+        Mat frame;
+        cap >> frame; // get a new frame from camera
+        cvtColor(frame, edges, CV_BGR2GRAY);
+        GaussianBlur(edges, edges, Size(7,7), 1.5, 1.5);
+        Canny(edges, edges, 0, 30, 3);
+        imshow("edges", edges);
+        if(waitKey(30) >= 0) break;
     }
-    waitKey(0);
+    // the camera will be deinitialized automatically in VideoCapture destructor
+    return 0;
 }
