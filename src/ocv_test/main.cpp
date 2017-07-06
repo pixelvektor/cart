@@ -9,18 +9,18 @@ vector<float> currentPosition;
 
 int main() {
     Testcam testcam;
-    int resolutionX=search.getSize()[0];
-    int resolutionY=search.getSize()[1];
-    int sectorX=resolutionX/5;
-    int sectorY=resolutionY/5;
-    int innerLeftUpX=sectorX*2;
-    int innerLeftUpY=sectorY*2;
-    int innerLeftDownY=sectorY*3;
-    int innerRightUpX=sectorX*3;
-    int outerLeftUpX=sectorX;
-    int outerLeftUpY=sectorY;
-    int outerLeftDownY=sectorY*4;
-    int outerRightUpX=sectorX*4;
+    int resolutionX = search.getSize()[0];
+    int resolutionY = search.getSize()[1];
+    int sectorX = resolutionX / 5;
+    int sectorY = resolutionY / 5;
+    int innerLeftUpX = sectorX * 2;
+    int innerLeftUpY = sectorY * 2;
+    int innerLeftDownY = sectorY * 3;
+    int innerRightUpX = sectorX * 3;
+    int outerLeftUpX = sectorX;
+    int outerLeftUpY = sectorY;
+    int outerLeftDownY = sectorY * 4;
+    int outerRightUpX = sectorX * 4;
     int currentDegreeX;
     int moveDegreeX;
     int currentDegreeY;
@@ -49,22 +49,22 @@ int main() {
 
                 //if(!currentPosition.empty())
                 //{
-                float cPosX = currentPosition[0];
-                float cPosY = currentPosition[1];
-                cout << "current position is " << cPosX << "/" << cPosY << endl;
+                //float cPosX = currentPosition[0];
+                //float cPosY = currentPosition[1];
+                //cout << "current position is " << cPosX << "/" << cPosY << endl;
 
-                float deltaPosX = tPosX - cPosX;
-                float deltaPosY = tPosY - cPosY;
+                //float deltaPosX = tPosX - cPosX;
+                //float deltaPosY = tPosY - cPosY;
 
-                vector<float> deltaVector = {deltaPosX, deltaPosY};
+                //vector<float> deltaVector = {deltaPosX, deltaPosY};
 
                 //checks position of x.
-                if(cPosX>innerLeftUpX){
-                    if(cPosX<innerRightUpX){
+                if(tPosX>innerLeftUpX){
+                    if(tPosX<innerRightUpX){
                         //xOk
                         moveDegreeX=0;
                     }else{
-                        if(cPosX<outerRightUpX){
+                        if(tPosX<outerRightUpX){
                             //xSlowPositive
                             moveDegreeX=3;
                         }else{
@@ -73,7 +73,7 @@ int main() {
                         }
                     }
                 }else{
-                    if(cPosX>outerLeftUpX){
+                    if(tPosX>outerLeftUpX){
                         //xSlowNegative
                         moveDegreeX=-3;
                     }else{
@@ -83,12 +83,12 @@ int main() {
                 }
 
                 //checks position of y.
-                if(cPosY>innerLeftUpY){
-                    if(cPosY<innerLeftDownY){
+                if(tPosY>innerLeftUpY){
+                    if(tPosY<innerLeftDownY){
                         //YOK
                         moveDegreeY=0;
                     }else{
-                        if(cPosY<outerLeftDownY){
+                        if(tPosY<outerLeftDownY){
                             //ySlowNegative
                             moveDegreeY=-3;
                         }else{
@@ -97,7 +97,7 @@ int main() {
                         }
                     }
                 }else{
-                    if(cPosY>outerLeftUpY){
+                    if(tPosY>outerLeftUpY){
                         //ySlowPositive
                         moveDegreeY=3;
                     }else{
