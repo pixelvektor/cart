@@ -12,6 +12,7 @@
 !*.aep
 !*.mov
 !*.cpp
+!*.c
 !*.py
 
 # ignore paths explicit
