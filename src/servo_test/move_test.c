@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
    }
 }
 
+/* Initialising pigpio and sets servos zo zero position. */
 int initialise(){
     if (gpioInitialise()<0){
         gpioServo(0, minPwX);
@@ -30,6 +31,7 @@ int initialise(){
     }
 }
 
+/* Converts degree to pulsewidth. */
 void degreeToPw(int degreeX, int degreeY){
     int rangeX=maxPwX-minPwX;
     int oneDegX=rangeX/180;
@@ -39,6 +41,7 @@ void degreeToPw(int degreeX, int degreeY){
     moveServo(1, oneDegY*degreeY);
 }
 
+/* Moves the servo to given pulsewidth. */
 void moveServo(int servo, int pw){
     /* position servo */
     gpioServo(servo, pw);
