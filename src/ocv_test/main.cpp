@@ -30,12 +30,14 @@ int main() {
     while (true) {
         //TODO: get position of camera or set it to auto 0/0
 
-        //currentPosition = {0, 0};
+        currentPosition = {0, 0};
+
         //Initialisation of servos to zero position
         if(initialise()){
-            currentPosition = {0, 0};
             currentDegreeX=0;
             currentDegreeY=0;
+        } else{
+            servoMovable= false;
         }
 
         while (testcam.isConnected()) {
