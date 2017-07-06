@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <sstream>
 
 using namespace cv;
 using namespace std;
@@ -19,8 +20,10 @@ private:
 public:
     SearchCART();
     ~SearchCART();
-    int loader();
-    int* getSize();
+    vector<int> loader(int i);
+    vector<double> getSize();
+    double getFPS();
+    double getFC();
 };
 
 #endif  // _CART_SEARCH_
