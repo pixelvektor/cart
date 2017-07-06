@@ -32,13 +32,21 @@ int initialise(){
 }
 
 /* Converts degree to pulsewidth. */
-void degreeToPw(int degreeX, int degreeY){
+int degreeToPw(int degreeX, int degreeY){
     int rangeX=maxPwX-minPwX;
     int oneDegX=rangeX/180;
     int rangeY=maxPwY-minPwY;
     int oneDegY=rangeY/60;
-    moveServo(0, oneDegX*degreeX);
-    moveServo(1, oneDegY*degreeY);
+    int resultX=minPwX+(oneDegX*degreeX);
+    int resultY=minPwY+(oneDegY*degreeY);
+    //Stops the servo from going too far.
+    if(resultX>=minPwX&&resultX<=maxPwX&&resultY>=minPwY&&resultY<=maxPwY){
+        moveServo(0, resultX);
+        moveServo(1, resultY);
+        return 1;
+    }else{
+        return 0;
+    }
 }
 
 /* Moves the servo to given pulsewidth. */
