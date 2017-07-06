@@ -9,15 +9,18 @@ vector<float> currentPosition;
 
 int main() {
     Testcam testcam;
-    vector<int> testCamResolution;
-    int innerLeftUpX;
-    int innerLeftUpY;
-    int innerLeftDownY;
-    int innerRightUpX;
-    int outerLeftUpX;
-    int outerLeftUpY;
-    int outerLeftDownY;
-    int outerRightUpX;
+    int resolutionX=search.getSize()[0];
+    int resolutionY=search.getSize()[1];
+    int sectorX=resolutionX/5;
+    int sectorY=resolutionY/5;
+    int innerLeftUpX=sectorX*2;
+    int innerLeftUpY=sectorY*2;
+    int innerLeftDownY=sectorY*3;
+    int innerRightUpX=sectorX*3;
+    int outerLeftUpX=sectorX;
+    int outerLeftUpY=sectorY;
+    int outerLeftDownY=sectorY*4;
+    int outerRightUpX=sectorX*4;
     int currentDegreeX;
     int moveDegreeX;
     int currentDegreeY;
@@ -26,12 +29,14 @@ int main() {
     while (true) {
         //TODO: get position of camera or set it to auto 0/0
 
-        //currentPosition = {0, 0};
+        currentPosition = {0, 0};
+
         //Initialisation of servos to zero position
         if(initialise()){
-            currentPosition = {0, 0};
             currentDegreeX=0;
             currentDegreeY=0;
+        } else{
+            servoMovable= false;
         }
 
         while (testcam.isConnected()) {
@@ -102,7 +107,10 @@ int main() {
                 }
 
                 //TODO: Gradzahlen übergeben
-                degreeToPw(currentDegreeX+moveDegreeX,currentDegreeY+moveDegreeY);
+                if (degreeToPw(currentDegreeX+moveDegreeX,currentDegreeY+moveDegreeY)!=0){
+                    currentDegreeX=currentDegreeX+moveDegreeX;
+                    currentDegreeY=currentDegreeY+moveDegreeY;
+                }
                 //}
             }
         }

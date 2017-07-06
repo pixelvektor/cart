@@ -10,6 +10,6 @@
 //#include <pigpio.h>
 
 int initialise();
-void degreeToPw(int degreeX, int degreeY);
+int degreeToPw(int degreeX, int degreeY);
 
 #endif //CART_MOVE_TEST_H
