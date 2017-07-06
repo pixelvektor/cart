@@ -6,7 +6,10 @@
 #define _CART_MAIN_
 
 #include "SearchCART.h"
+#include "Servo.h"
 #include <iostream>
+
+using namespace std;
 
 int main();
 

@@ -6,9 +6,8 @@
 #define CART_MAIN_H
 
 #include <vector>
-#include "Testcam.h"
 #include <iostream>
-#include "../servo_test/move_test.h"
+#include "../Servo.h"
 
 using namespace std;
 

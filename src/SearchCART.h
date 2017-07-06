@@ -24,6 +24,7 @@ public:
     vector<double> getSize();
     double getFPS();
     double getFC();
+    bool isConnected();
 };
 
 #endif  // _CART_SEARCH_

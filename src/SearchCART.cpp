@@ -54,6 +54,10 @@ double SearchCART::getFPS() {
     return capture.get(CAP_PROP_FPS);
 }
 
+bool SearchCART::isConnected() {
+    return true;
+}
+
 double SearchCART::getFC() {
     return capture.get(CAP_PROP_FRAME_COUNT);
 }

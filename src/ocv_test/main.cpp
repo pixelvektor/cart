@@ -8,19 +8,18 @@
 vector<float> currentPosition;
 
 int main() {
-    Testcam testcam;
-    int resolutionX=search.getSize()[0];
-    int resolutionY=search.getSize()[1];
-    int sectorX=resolutionX/5;
-    int sectorY=resolutionY/5;
-    int innerLeftUpX=sectorX*2;
-    int innerLeftUpY=sectorY*2;
-    int innerLeftDownY=sectorY*3;
-    int innerRightUpX=sectorX*3;
-    int outerLeftUpX=sectorX;
-    int outerLeftUpY=sectorY;
-    int outerLeftDownY=sectorY*4;
-    int outerRightUpX=sectorX*4;
+    int resolutionX = search.getSize()[0];
+    int resolutionY = search.getSize()[1];
+    int sectorX = resolutionX / 5;
+    int sectorY = resolutionY / 5;
+    int innerLeftUpX = sectorX * 2;
+    int innerLeftUpY = sectorY * 2;
+    int innerLeftDownY = sectorY * 3;
+    int innerRightUpX = sectorX * 3;
+    int outerLeftUpX = sectorX;
+    int outerLeftUpY = sectorY;
+    int outerLeftDownY = sectorY * 4;
+    int outerRightUpX = sectorX * 4;
     int currentDegreeX;
     int moveDegreeX;
     int currentDegreeY;
@@ -32,11 +31,11 @@ int main() {
         currentPosition = {0, 0};
 
         //Initialisation of servos to zero position
-        if(initialise()){
-            currentDegreeX=0;
-            currentDegreeY=0;
-        } else{
-            servoMovable= false;
+        if (initialise()) {
+            currentDegreeX = 0;
+            currentDegreeY = 0;
+        } else {
+            servoMovable = false;
         }
 
         while (testcam.isConnected()) {
@@ -59,57 +58,57 @@ int main() {
                 vector<float> deltaVector = {deltaPosX, deltaPosY};
 
                 //checks position of x.
-                if(cPosX>innerLeftUpX){
-                    if(cPosX<innerRightUpX){
+                if (cPosX > innerLeftUpX) {
+                    if (cPosX < innerRightUpX) {
                         //xOk
-                        moveDegreeX=0;
-                    }else{
-                        if(cPosX<outerRightUpX){
+                        moveDegreeX = 0;
+                    } else {
+                        if (cPosX < outerRightUpX) {
                             //xSlowPositive
-                            moveDegreeX=3;
-                        }else{
+                            moveDegreeX = 3;
+                        } else {
                             //xFastPositive
-                            moveDegreeX=6;
+                            moveDegreeX = 6;
                         }
                     }
-                }else{
-                    if(cPosX>outerLeftUpX){
+                } else {
+                    if (cPosX > outerLeftUpX) {
                         //xSlowNegative
-                        moveDegreeX=-3;
-                    }else{
+                        moveDegreeX = -3;
+                    } else {
                         //xFastNegative
-                        moveDegreeX=-6;
+                        moveDegreeX = -6;
                     }
                 }
 
                 //checks position of y.
-                if(cPosY>innerLeftUpY){
-                    if(cPosY<innerLeftDownY){
+                if (cPosY > innerLeftUpY) {
+                    if (cPosY < innerLeftDownY) {
                         //YOK
-                        moveDegreeY=0;
-                    }else{
-                        if(cPosY<outerLeftDownY){
+                        moveDegreeY = 0;
+                    } else {
+                        if (cPosY < outerLeftDownY) {
                             //ySlowNegative
-                            moveDegreeY=-3;
-                        }else{
+                            moveDegreeY = -3;
+                        } else {
                             //yFastNegative
-                            moveDegreeY=-6;
+                            moveDegreeY = -6;
                         }
                     }
-                }else{
-                    if(cPosY>outerLeftUpY){
+                } else {
+                    if (cPosY > outerLeftUpY) {
                         //ySlowPositive
-                        moveDegreeY=3;
-                    }else{
+                        moveDegreeY = 3;
+                    } else {
                         //yFastPositive
-                        moveDegreeY=6;
+                        moveDegreeY = 6;
                     }
                 }
 
                 //TODO: Gradzahlen übergeben
-                if (degreeToPw(currentDegreeX+moveDegreeX,currentDegreeY+moveDegreeY)!=0){
-                    currentDegreeX=currentDegreeX+moveDegreeX;
-                    currentDegreeY=currentDegreeY+moveDegreeY;
+                if (degreeToPw(currentDegreeX + moveDegreeX, currentDegreeY + moveDegreeY) != 0) {
+                    currentDegreeX = currentDegreeX + moveDegreeX;
+                    currentDegreeY = currentDegreeY + moveDegreeY;
                 }
                 //}
             }
