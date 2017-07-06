@@ -6,7 +6,6 @@
 #include "main.h"
 
 vector<float> currentPosition;
-bool servoMovable= true;
 
 int main() {
     Testcam testcam;
@@ -41,7 +40,7 @@ int main() {
         }
 
         while (testcam.isConnected()) {
-            if (testcam.targetFound()&&servoMovable) {
+            if (testcam.targetFound()) {
                 vector<float> v = testcam.getTargetPosition();
                 float tPosX = v[0];
                 float tPosY = v[1];
@@ -109,9 +108,8 @@ int main() {
 
                 //TODO: Gradzahlen übergeben
                 if (degreeToPw(currentDegreeX+moveDegreeX,currentDegreeY+moveDegreeY)!=0){
-
-                }else{
-                    servoMovable= false;
+                    currentDegreeX=currentDegreeX+moveDegreeX;
+                    currentDegreeY=currentDegreeY+moveDegreeY;
                 }
                 //}
             }
