@@ -27,7 +27,7 @@ int SearchCART::initVideo() {
     cout << fullFilename << endl;
 
     // Öffnen des Streams
-    capture.open(fullFilename);
+    capture.open(0);
     if ( !capture.isOpened())
         return -1;
     else
@@ -65,7 +65,7 @@ double SearchCART::getFC() {
 /**
  * Lädt die Koordinaten des Punktes aus dem aktuellen Bild.
  * @param index Der Index der Schleife für die Speicherung der Sequenz.
- * @return 0
+ * @return x und y des Punktes.
  */
 vector<int> SearchCART::loader(int index) {
     // Das aktuelle Frame laden
@@ -86,6 +86,7 @@ vector<int> SearchCART::loader(int index) {
     Mat whitePixelCoord;
     findNonZero(captureThres, whitePixelCoord);
 
+    // Berechnen des Mittelpunktes der Ansammlung von weißen Pixeln
     int startX = whitePixelCoord.row(0).at<int>(0,0);
     int startY = whitePixelCoord.row(0).at<int>(0,1);
 
@@ -96,6 +97,30 @@ vector<int> SearchCART::loader(int index) {
     int midY = startY + ((stopY - startY) / 2);
 
     vector<int> ballPosition = {midX, midY};
+
+    vector<Vec3f> possibleLights;
+
+    GaussianBlur(captureGray, captureGray, Size(9, 9), 2, 2);
+    HoughCircles(captureGray, possibleLights, CV_HOUGH_GRADIENT, 1, captureThres.rows, 180, 20, 2, 50);
+
+    for( size_t i = 0; i < possibleLights.size(); i++ )
+    {
+        Point center(cvRound(possibleLights[i][0]), cvRound(possibleLights[i][1]));
+        int radius = cvRound(possibleLights[i][2]);
+        // circle center
+        circle( captureRGB, center, 3, Scalar(0,255,0), -1, 8, 0 );
+        // circle outline
+        circle( captureRGB, center, radius, Scalar(0,0,255), 3, 8, 0 );
+    }
+
+    if (true) {
+        cout << "#############" << endl;
+        cout << possibleLights.size() << endl;
+        for (auto i = possibleLights.begin(); i != possibleLights.end(); ++i) {
+            cout << *i << ' ';
+        }
+        cout << "#############" << endl;
+    }
 
     // print white pixel positions
     if (index == 0) {
@@ -108,7 +133,7 @@ vector<int> SearchCART::loader(int index) {
     string savepath = "img/image.";
     savepath += oss.str();
     savepath += ".jpg";
-    imwrite(savepath, captureThres);
+    imwrite(savepath, captureRGB);
 
     return ballPosition;
 }
