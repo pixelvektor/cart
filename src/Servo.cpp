@@ -4,21 +4,26 @@
 
 #include "Servo.h"
 
-int maxPwX = 2500;
-int minPwX = 1000;
-int maxPwY = 2500;
-int minPwY = 1000;
+// Maximale Frequenzen für den Arbeitsbereich der Servos
+int maxPwX = 1900;
+int minPwX = 1100;
+int maxPwY = 1900;
+int minPwY = 1100;
+
+// GPIO Adressen der Servos
+int SERVO_X = 20;
+int SERVO_Y = 26;
 
 /* Initialising pigpio and sets servos zo zero position. */
 int Servo::initialiseServo() {
 //    if (gpioInitialise() < 0) {
-//        gpioServo(0, minPwX);
-//        gpioServo(1, (maxPwY - minPwY) / 2);
+//        gpioServo(SERVO_X, minPwX);
+//        gpioServo(SERVO_Y, minPwY + (maxPwY - minPwY) / 2);
 //        time_sleep(10);
 //        return 1;
 //    } else {
 //        printf("ERROR initializing!");
-//        return 0;
+        return 0;
 //    }
 }
 
@@ -36,10 +41,10 @@ int Servo::degreeToPw(int degreeX, int degreeY) {
     int resultY = minPwY + (oneDegY * degreeY);
     //Stops the servo from going too far.
     if (resultX >= minPwX && resultX <= maxPwX)
-        moveServo(0, resultX);
+        moveServo(SERVO_X, resultX);
 
     if (resultY >= minPwY && resultY <= maxPwY)
-        moveServo(1, resultY);
+        moveServo(SERVO_Y, resultY);
 //        return 1;
 //    } else {
         return 0;

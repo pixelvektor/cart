@@ -42,7 +42,7 @@ int SearchCART::initVideo() {
 vector<double> SearchCART::getSize() {
     double width = capture.get(CAP_PROP_FRAME_WIDTH);
     double height = capture.get(CAP_PROP_FRAME_HEIGHT);
-    vector<double> rV = {width, height};
+    vector<double> rV(width, height);
     return rV;
 }
 
@@ -96,7 +96,7 @@ vector<int> SearchCART::loader(int index) {
     int midX = startX + ((stopX - startX) / 2);
     int midY = startY + ((stopY - startY) / 2);
 
-    vector<int> ballPosition = {midX, midY};
+    vector<int> ballPosition(midX, midY);
 
     vector<Vec3f> possibleLights;
 
@@ -113,14 +113,14 @@ vector<int> SearchCART::loader(int index) {
         circle( captureRGB, center, radius, Scalar(0,0,255), 3, 8, 0 );
     }
 
-    if (true) {
-        cout << "#############" << endl;
-        cout << possibleLights.size() << endl;
-        for (auto i = possibleLights.begin(); i != possibleLights.end(); ++i) {
-            cout << *i << ' ';
-        }
-        cout << "#############" << endl;
-    }
+//    if (true) {
+//        cout << "#############" << endl;
+//        cout << possibleLights.size() << endl;
+//        for (auto i = possibleLights.begin(); i != possibleLights.end(); ++i) {
+//            cout << *i << ' ';
+//        }
+//        cout << "#############" << endl;
+//    }
 
     // print white pixel positions
     if (index == 0) {
