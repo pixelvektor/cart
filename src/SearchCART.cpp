@@ -37,13 +37,16 @@ int SearchCART::initVideo() {
 
 /**
  * Getter für die Dimension des Streams in Pixeln.
- * @return double Array {Breite, Höhe}.
+ * @return int Vector {Breite, Höhe}.
  */
-vector<double> SearchCART::getSize() {
-    double width = capture.get(CAP_PROP_FRAME_WIDTH);
-    double height = capture.get(CAP_PROP_FRAME_HEIGHT);
-    vector<double> rV(width, height);
-    return rV;
+vector<int> SearchCART::getSize() {
+    int width = (int) capture.get(CAP_PROP_FRAME_WIDTH);
+    int height = (int) capture.get(CAP_PROP_FRAME_HEIGHT);
+
+    vector<int> retVal {width, height};
+    retVal.shrink_to_fit();
+
+    return retVal;
 }
 
 /**
@@ -65,7 +68,8 @@ double SearchCART::getFC() {
 /**
  * Lädt die Koordinaten des Punktes aus dem aktuellen Bild.
  * @param index Der Index der Schleife für die Speicherung der Sequenz.
- * @return x und y des Punktes.
+ * @return int Vector mit den Koordinaten des Ziels.
+ * Wenn kein Ziel erkannt wurde, wird der Mittelpunkt des Bildes zurück gegeben. {x, y}
  */
 vector<int> SearchCART::loader(int index) {
     // Das aktuelle Frame laden
@@ -77,32 +81,49 @@ vector<int> SearchCART::loader(int index) {
     cvtColor(captureRGB, captureGray, CV_RGB2GRAY);
 
     // Schwellwert für Graustufen (alles unter dem Schwellwert soll schwarz werden)
-    int threshold_value = 200;
+//    int threshold_value = 200;
 
-    Mat captureThres;
-    threshold(captureGray, captureThres, threshold_value, 255, 0);
+//    Mat captureThres;
+//    threshold(captureGray, captureThres, threshold_value, 255, 0);
 
     // Auslesen der weißen Pixel
-    Mat whitePixelCoord;
-    findNonZero(captureThres, whitePixelCoord);
+//    Mat whitePixelCoord;
+//    findNonZero(captureThres, whitePixelCoord);
 
-    // Berechnen des Mittelpunktes der Ansammlung von weißen Pixeln
-    int startX = whitePixelCoord.row(0).at<int>(0,0);
-    int startY = whitePixelCoord.row(0).at<int>(0,1);
+//    // Berechnen des Mittelpunktes der Ansammlung von weißen Pixeln
+//    int startX = whitePixelCoord.row(0).at<int>(0,0);
+//    int startY = whitePixelCoord.row(0).at<int>(0,1);
+//
+//    int stopX = whitePixelCoord.row(whitePixelCoord.rows-1).at<int>(0,0);
+//    int stopY = whitePixelCoord.row(whitePixelCoord.rows-1).at<int>(0,1);
+//
+//    int midX = startX + ((stopX - startX) / 2);
+//    int midY = startY + ((stopY - startY) / 2);
 
-    int stopX = whitePixelCoord.row(whitePixelCoord.rows-1).at<int>(0,0);
-    int stopY = whitePixelCoord.row(whitePixelCoord.rows-1).at<int>(0,1);
+//    vector<int> ballPosition(midX, midY);
 
-    int midX = startX + ((stopX - startX) / 2);
-    int midY = startY + ((stopY - startY) / 2);
-
-    vector<int> ballPosition(midX, midY);
-
+    // Speichert die möglichen Lichtquellen
     vector<Vec3f> possibleLights;
 
+    // Blur um Irritationen auszuschließen
     GaussianBlur(captureGray, captureGray, Size(9, 9), 2, 2);
-    HoughCircles(captureGray, possibleLights, CV_HOUGH_GRADIENT, 1, captureThres.rows, 180, 20, 2, 50);
+    // Finden von Kreisen im Bild
+    HoughCircles(captureGray, possibleLights, CV_HOUGH_GRADIENT, 1, captureGray.rows, 180, 20, 2, 50);
 
+    vector<int> targetCoord(2);
+
+    if (possibleLights.capacity() > 0) {
+        int targetX = (int) possibleLights[0].val[0];
+        int targetY = (int) possibleLights[0].val[1];
+        targetCoord = {targetX, targetY};
+    } else {
+        cout << "NO TARGET FOUND!" << endl;
+        int midWidth = this->getSize()[0] / 2;
+        int midHeight = this->getSize()[1] / 2;
+        targetCoord = {midWidth, midHeight};
+    }
+
+    // Für zu speichernde Bilder: Zeichnen der Kreise in das Farbbbild
     for( size_t i = 0; i < possibleLights.size(); i++ )
     {
         Point center(cvRound(possibleLights[i][0]), cvRound(possibleLights[i][1]));
@@ -113,19 +134,10 @@ vector<int> SearchCART::loader(int index) {
         circle( captureRGB, center, radius, Scalar(0,0,255), 3, 8, 0 );
     }
 
-//    if (true) {
-//        cout << "#############" << endl;
-//        cout << possibleLights.size() << endl;
-//        for (auto i = possibleLights.begin(); i != possibleLights.end(); ++i) {
-//            cout << *i << ' ';
-//        }
-//        cout << "#############" << endl;
-//    }
-
     // print white pixel positions
-    if (index == 0) {
-        //cout << "white pixels at = "<< endl << " "  << whitePixelCoord << endl << endl;
-    }
+//    if (index == 0) {
+//        //cout << "white pixels at = "<< endl << " "  << whitePixelCoord << endl << endl;
+//    }
 
     // schreibe die Einzelbilder auf die Platte
     ostringstream oss;
@@ -135,5 +147,5 @@ vector<int> SearchCART::loader(int index) {
     savepath += ".jpg";
     imwrite(savepath, captureRGB);
 
-    return ballPosition;
+    return targetCoord;
 }

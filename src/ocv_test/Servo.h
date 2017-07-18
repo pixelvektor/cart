@@ -11,6 +11,8 @@
 
 using namespace std;
 
+int main();
+
 class Servo
 {
 private:

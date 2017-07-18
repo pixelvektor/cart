@@ -4,15 +4,31 @@
 
 #include "Servo.h"
 
-// Maximale Frequenzen für den Arbeitsbereich der Servos
 int maxPwX = 1900;
 int minPwX = 1100;
 int maxPwY = 1900;
 int minPwY = 1100;
 
-// GPIO Adressen der Servos
-int SERVO_X = 20;
-int SERVO_Y = 26;
+int servoX = 20;
+int servoY = 26;
+
+int main() {
+    Servo s;
+    s.initialiseServo();
+
+    bool run = true;
+    int angle;
+
+    while (run) {
+        cout << "type angle: ";
+        cin >> angle;
+
+        if (angle == 666)
+            run = false;
+
+        s.degreeToPw(angle, 30);
+    }
+}
 
 /* Initialising pigpio and sets servos zo zero position. */
 int Servo::initialiseServo() {
@@ -20,19 +36,17 @@ int Servo::initialiseServo() {
         cout << "ERROR initializing!" << endl;
         return 0;
     } else {
-        gpioServo(SERVO_X, minPwX);
-        gpioServo(SERVO_Y, minPwY + (maxPwY - minPwY) / 2);
-        time_sleep(10);
+        cout << "init" << endl;
+        gpioServo(servoX, minPwX);
+        gpioServo(servoY, minPwY + (maxPwY - minPwY) / 2);
+        time_sleep(2);
+        cout << "final and EXIT" << endl;
         return 1;
     }
 }
 
 /* Converts degree to pulsewidth. */
 int Servo::degreeToPw(int degreeX, int degreeY) {
-    cout << "degreeX: "
-         << degreeX
-         << " degreeY: "
-         << degreeY << endl;
     int rangeX = maxPwX - minPwX;
     int oneDegX = rangeX / 180;
     int rangeY = maxPwY - minPwY;
@@ -40,23 +54,24 @@ int Servo::degreeToPw(int degreeX, int degreeY) {
     int resultX = minPwX + (oneDegX * degreeX);
     int resultY = minPwY + (oneDegY * degreeY);
     //Stops the servo from going too far.
-    if (resultX >= minPwX && resultX <= maxPwX)
-        moveServo(SERVO_X, resultX);
-
-    if (resultY >= minPwY && resultY <= maxPwY)
-        moveServo(SERVO_Y, resultY);
-//        return 1;
-//    } else {
+    if (resultX >= minPwX
+        && resultX <= maxPwX
+        && resultY >= minPwY
+        && resultY <= maxPwY) {
+        moveServo(servoX, resultX);
+        moveServo(servoY, resultY);
+        return 1;
+    } else {
         return 0;
-//    }
+    }
 }
 
 /* Moves the servo to given pulsewidth. */
 void Servo::moveServo(int servo, int pw) {
     /* position servo */
-    gpioServo(servo, pw);
-    cout << "Servo: "
+    cout << "moveServo got servo: "
          << servo
-         << " at PW: "
+         << " and pw: "
          << pw << endl;
+    gpioServo(servo, pw);
 }

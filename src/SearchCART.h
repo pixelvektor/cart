@@ -21,7 +21,7 @@ public:
     SearchCART();
     ~SearchCART();
     vector<int> loader(int i);
-    vector<double> getSize();
+    vector<int> getSize();
     double getFPS();
     double getFC();
     bool isConnected();

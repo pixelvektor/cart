@@ -8,18 +8,18 @@ int main() {
     SearchCART search;
     Servo servo;
 
-    double resolutionX = search.getSize()[0];
-    double resolutionY = search.getSize()[1];
-    double sectorX = resolutionX / 5;
-    double sectorY = resolutionY / 5;
-    double innerLeftUpX = sectorX * 2;
-    double innerLeftUpY = sectorY * 2;
-    double innerLeftDownY = sectorY * 3;
-    double innerRightUpX = sectorX * 3;
-    double outerLeftUpX = sectorX;
-    double outerLeftUpY = sectorY;
-    double outerLeftDownY = sectorY * 4;
-    double outerRightUpX = sectorX * 4;
+    int resolutionX = search.getSize()[0];
+    int resolutionY = search.getSize()[1];
+    int sectorX = resolutionX / 5;
+    int sectorY = resolutionY / 5;
+    int innerLeftUpX = sectorX * 2;
+    int innerLeftUpY = sectorY * 2;
+    int innerLeftDownY = sectorY * 3;
+    int innerRightUpX = sectorX * 3;
+    int outerLeftUpX = sectorX;
+    int outerLeftUpY = sectorY;
+    int outerLeftDownY = sectorY * 4;
+    int outerRightUpX = sectorX * 4;
     int currentDegreeX;
     int moveDegreeX;
     int currentDegreeY;
@@ -27,9 +27,9 @@ int main() {
 
     // Ausgabe der Größe des Videos
     cout << "width:  "
-         << search.getSize()[0] << endl
+         << resolutionX << endl
          << "height: "
-         << search.getSize()[1] << endl
+         << resolutionY << endl
          << "fps: "
          << search.getFPS() << endl;
 
@@ -41,22 +41,22 @@ int main() {
 
     // schrittweise das Video durchlaufen und die Servos korrigieren
     int i = 0;
-    while (i < 75) {
+    while (i < 5) {
         vector<int> position = search.loader(i);
 
-        cout << "X: "
-             << position[0]
-             << " Y: "
-             << position[1]
-             << " FC: "
-             << search.getFC() << endl;
+//        cout << "X: "
+//             << position[0]
+//             << " Y: "
+//             << position[1]
+//             << " FC: "
+//             << search.getFC() << endl;
         i++;
 
         if (true) {
             double tPosX = position[0];
             double tPosY = position[1];
 
-            cout << "target position is " << tPosX << "/" << tPosY << endl;
+            cout << "target position is " << tPosX << " | " << tPosY << endl;
 
             //checks position of x.
             if (tPosX > innerLeftUpX) {
