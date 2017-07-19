@@ -34,9 +34,9 @@ int Servo::degreeToPw(int degreeX, int degreeY) {
          << " degreeY: "
          << degreeY << endl;
     int rangeX = maxPwX - minPwX;
-    int oneDegX = rangeX / 180;
+    int oneDegX = rangeX / 144;
     int rangeY = maxPwY - minPwY;
-    int oneDegY = rangeY / 60;
+    int oneDegY = rangeY / 48;
     int resultX = minPwX + (oneDegX * degreeX);
     int resultY = minPwY + (oneDegY * degreeY);
     //Stops the servo from going too far.

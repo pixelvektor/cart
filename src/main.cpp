@@ -66,19 +66,19 @@ int main() {
                 } else {
                     if (tPosX < outerRightUpX) {
                         //xSlowPositive
-                        moveDegreeX = 3;
+                        moveDegreeX = -3;
                     } else {
                         //xFastPositive
-                        moveDegreeX = 6;
+                        moveDegreeX = -6;
                     }
                 }
             } else {
                 if (tPosX > outerLeftUpX) {
                     //xSlowNegative
-                    moveDegreeX = -3;
+                    moveDegreeX = 3;
                 } else {
                     //xFastNegative
-                    moveDegreeX = -6;
+                    moveDegreeX = 6;
                 }
             }
 
@@ -90,19 +90,19 @@ int main() {
                 } else {
                     if (tPosY < outerLeftDownY) {
                         //ySlowNegative
-                        moveDegreeY = -3;
+                        moveDegreeY = 3;
                     } else {
                         //yFastNegative
-                        moveDegreeY = -6;
+                        moveDegreeY = 6;
                     }
                 }
             } else {
                 if (tPosY > outerLeftUpY) {
                     //ySlowPositive
-                    moveDegreeY = 3;
+                    moveDegreeY = -3;
                 } else {
                     //yFastPositive
-                    moveDegreeY = 6;
+                    moveDegreeY = -6;
                 }
             }
 
