@@ -3,8 +3,6 @@
 //
 
 #include "SearchCART.h"
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/core/core.hpp>
 
 SearchCART::SearchCART() {
     cout << "con" << endl;
@@ -69,6 +67,10 @@ bool SearchCART::isConnected() {
     return this->connected;
 }
 
+bool SearchCART::isNoTarget() {
+    return this->noTarget;
+}
+
 /**
  * Lädt die Koordinaten des Punktes aus dem aktuellen Bild.
  * @param index Der Index der Schleife für die Speicherung der Sequenz.
@@ -119,11 +121,13 @@ vector<int> SearchCART::loader(int index) {
     // Hole den ersten Kreis sofern welche vorhanden sind
     // Ansonsten setze den Mittelpunkt des Bildes als Ziel
     if (possibleLights.capacity() > 0) {
+        this->noTarget = false;
         int targetX = (int) possibleLights[0].val[0];
         int targetY = (int) possibleLights[0].val[1];
         targetCoord = {targetX, targetY};
     } else {
         cout << "NO TARGET FOUND!" << endl;
+        this->noTarget = true;
         int midWidth = this->getSize()[0] / 2;
         int midHeight = this->getSize()[1] / 2;
         targetCoord = {midWidth, midHeight};
@@ -152,7 +156,10 @@ vector<int> SearchCART::loader(int index) {
     savepath += oss.str();
     savepath += ".jpg";
 //    imwrite(savepath, captureRGB);
-    imshow("Live", captureRGB);
+
+    // Show Liveview;
+    imshow("Live@CART", captureRGB);
     waitKey(1);
+
     return targetCoord;
 }

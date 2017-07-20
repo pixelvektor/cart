@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core/core.hpp>
 #include <sstream>
 
 using namespace cv;
@@ -15,6 +17,7 @@ using namespace std;
 class SearchCART
 {
 private:
+    bool noTarget = false;
     bool connected = false;
     int initVideo();
     VideoCapture capture;
@@ -25,6 +28,7 @@ public:
     vector<int> getSize();
     double getFPS();
     bool isConnected();
+    bool isNoTarget();
 };
 
 #endif  // _CART_SEARCH_

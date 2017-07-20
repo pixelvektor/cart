@@ -18,6 +18,7 @@ private:
 public:
     int initialiseServo();
     int degreeToPw(int degreeX, int degreeY);
+    void reset();
 };
 
 #endif //CART_MOVE_TEST_H

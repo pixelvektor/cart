@@ -22,11 +22,15 @@ int Servo::initialiseServo() {
         cout << "ERROR initializing!" << endl;
         return 0;
     } else {
-        gpioServo(SERVO_X, minPwX);
-        gpioServo(SERVO_Y, minPwY + (maxPwY - minPwY) / 2);
-        time_sleep(3);
+        this->reset();
         return 1;
     }
+}
+
+void Servo::reset() {
+    gpioServo(SERVO_X, minPwX);
+    gpioServo(SERVO_Y, minPwY + (maxPwY - minPwY) / 2);
+    time_sleep(3);
 }
 
 /** Wandelt die Gradzahlen in Pulsweite um.

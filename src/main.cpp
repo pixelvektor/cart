@@ -41,7 +41,17 @@ int main() {
 
     // schrittweise das Video durchlaufen und die Servos korrigieren.
     int i = 0;
+    int noTarget = 0;
     while (true) {
+
+        if (search.isNoTarget()) {
+            noTarget++;
+        }
+
+        if (noTarget > 40) {
+            servo.reset();
+        }
+
         if (true) {
             vector<int> position = search.loader(i);
 
