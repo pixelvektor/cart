@@ -46,10 +46,13 @@ int main() {
 
         if (search.isNoTarget()) {
             noTarget++;
+        } else {
+            noTarget = 0;
         }
 
         if (noTarget > 40) {
             servo.reset();
+            noTarget = 0;
         }
 
         if (true) {
