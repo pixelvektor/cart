@@ -3,6 +3,8 @@
 //
 
 #include "SearchCART.h"
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core/core.hpp>
 
 SearchCART::SearchCART() {
     cout << "con" << endl;
@@ -28,6 +30,7 @@ int SearchCART::initVideo() {
 
     // Öffnen des Streams
     capture.open(0);
+    capture.set(CAP_PROP_FPS, 30);
     if ( !capture.isOpened()) {
         this->connected = true;
         return -1;
@@ -149,6 +152,7 @@ vector<int> SearchCART::loader(int index) {
     savepath += oss.str();
     savepath += ".jpg";
 //    imwrite(savepath, captureRGB);
-
+    imshow("Live", captureRGB);
+    waitKey(1);
     return targetCoord;
 }
