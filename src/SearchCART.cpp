@@ -148,7 +148,7 @@ vector<int> SearchCART::loader(int index) {
     string savepath = "img/image.";
     savepath += oss.str();
     savepath += ".jpg";
-    imwrite(savepath, captureRGB);
+//    imwrite(savepath, captureRGB);
 
     return targetCoord;
 }

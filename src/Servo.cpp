@@ -24,7 +24,7 @@ int Servo::initialiseServo() {
     } else {
         gpioServo(SERVO_X, minPwX);
         gpioServo(SERVO_Y, minPwY + (maxPwY - minPwY) / 2);
-        time_sleep(10);
+        time_sleep(3);
         return 1;
     }
 }

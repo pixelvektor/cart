@@ -41,8 +41,8 @@ int main() {
 
     // schrittweise das Video durchlaufen und die Servos korrigieren.
     int i = 0;
-    while (i < 5) {
-        if (search.isConnected()) {
+    while (true) {
+        if (true) {
             vector<int> position = search.loader(i);
 
 //        cout << "X: "
@@ -64,22 +64,22 @@ int main() {
                     if (tPosX < outerRightUpX) {
                         //xSlowPositive
                         //Servo muss langsam in x-Richtung bewegt werden.
-                        moveDegreeX = -3;
+                        moveDegreeX = -2;
                     } else {
                         //xFastPositive
                         //Servo muss schnell in x-Richtung bewegt werden.
-                        moveDegreeX = -6;
+                        moveDegreeX = -4;
                     }
                 }
             } else {
                 if (tPosX > outerLeftUpX) {
                     //xSlowNegative
                     //Servo muss langsam in x-Richtung bewegt werden.
-                    moveDegreeX = 3;
+                    moveDegreeX = 2;
                 } else {
                     //xFastNegative
                     //Servo muss schnell in x-Richtung bewegt werden.
-                    moveDegreeX = 6;
+                    moveDegreeX = 4;
                 }
             }
 
@@ -92,22 +92,22 @@ int main() {
                     if (tPosY < outerLeftDownY) {
                         //ySlowNegative
                         //Servo muss langsam in y-Richtung bewegt werden.
-                        moveDegreeY = 3;
+                        moveDegreeY = 1;
                     } else {
                         //yFastNegative
                         //Servo muss schnell in y-Richtung bewegt werden.
-                        moveDegreeY = 6;
+                        moveDegreeY = 2;
                     }
                 }
             } else {
                 if (tPosY > outerLeftUpY) {
                     //ySlowPositive
                     //Servo muss langsam in y-Richtung bewegt werden.
-                    moveDegreeY = -3;
+                    moveDegreeY = -1;
                 } else {
                     //yFastPositive
                     //Servo muss schnell in y-Richtung bewegt werden.
-                    moveDegreeY = -6;
+                    moveDegreeY = -2;
                 }
             }
             //Wenn die Bewegung möglich ist, wird der aktuelle Winkel aktualisiert.
