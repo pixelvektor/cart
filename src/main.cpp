@@ -50,8 +50,10 @@ int main() {
             noTarget = 0;
         }
 
-        if (noTarget > 40) {
+        if (noTarget > 60) {
             servo.reset();
+            currentDegreeX = 0;
+            currentDegreeY = 30;
             noTarget = 0;
         }
 
