@@ -28,8 +28,10 @@ int SearchCART::initVideo() {
 
     // Öffnen des Streams
     capture.open(0);
-    if ( !capture.isOpened())
+    if ( !capture.isOpened()) {
+        this->connected = true;
         return -1;
+    }
     else
         cout << "STREAM IS OPEN" << endl;
     return 0;
@@ -57,12 +59,11 @@ double SearchCART::getFPS() {
     return capture.get(CAP_PROP_FPS);
 }
 
+/** Getter für den Status der Verbindung zur Kamera.
+ * @return bool true wenn die Kamera verbunden ist.
+ */
 bool SearchCART::isConnected() {
-    return true;
-}
-
-double SearchCART::getFC() {
-    return capture.get(CAP_PROP_FRAME_COUNT);
+    return this->connected;
 }
 
 /**
@@ -112,6 +113,8 @@ vector<int> SearchCART::loader(int index) {
 
     vector<int> targetCoord(2);
 
+    // Hole den ersten Kreis sofern welche vorhanden sind
+    // Ansonsten setze den Mittelpunkt des Bildes als Ziel
     if (possibleLights.capacity() > 0) {
         int targetX = (int) possibleLights[0].val[0];
         int targetY = (int) possibleLights[0].val[1];

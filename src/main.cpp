@@ -33,51 +33,52 @@ int main() {
          << "fps: "
          << search.getFPS() << endl;
 
-    //Initialisation of servos to zero position
+    //Initialisiert die Servos auf die Anfangsposition
     if (servo.initialiseServo()) {
         currentDegreeX = 0;
         currentDegreeY = 30;
     }
 
-    // schrittweise das Video durchlaufen und die Servos korrigieren
+    // schrittweise das Video durchlaufen und die Servos korrigieren.
     int i = 0;
     while (i < 5) {
-        vector<int> position = search.loader(i);
+        if (search.isConnected()) {
+            vector<int> position = search.loader(i);
 
 //        cout << "X: "
 //             << position[0]
 //             << " Y: "
-//             << position[1]
-//             << " FC: "
-//             << search.getFC() << endl;
-        i++;
+//             << position[1] << endl;
 
-        if (true) {
             double tPosX = position[0];
             double tPosY = position[1];
 
             cout << "target position is " << tPosX << " | " << tPosY << endl;
 
-            //checks position of x.
+            //Überprüft die x-Position.
             if (tPosX > innerLeftUpX) {
                 if (tPosX < innerRightUpX) {
-                    //xOk
+                    //Servo muss nicht in x-Richtung bewegt werden.
                     moveDegreeX = 0;
                 } else {
                     if (tPosX < outerRightUpX) {
                         //xSlowPositive
+                        //Servo muss langsam in x-Richtung bewegt werden.
                         moveDegreeX = -3;
                     } else {
                         //xFastPositive
+                        //Servo muss schnell in x-Richtung bewegt werden.
                         moveDegreeX = -6;
                     }
                 }
             } else {
                 if (tPosX > outerLeftUpX) {
                     //xSlowNegative
+                    //Servo muss langsam in x-Richtung bewegt werden.
                     moveDegreeX = 3;
                 } else {
                     //xFastNegative
+                    //Servo muss schnell in x-Richtung bewegt werden.
                     moveDegreeX = 6;
                 }
             }
@@ -90,22 +91,26 @@ int main() {
                 } else {
                     if (tPosY < outerLeftDownY) {
                         //ySlowNegative
+                        //Servo muss langsam in y-Richtung bewegt werden.
                         moveDegreeY = 3;
                     } else {
                         //yFastNegative
+                        //Servo muss schnell in y-Richtung bewegt werden.
                         moveDegreeY = 6;
                     }
                 }
             } else {
                 if (tPosY > outerLeftUpY) {
                     //ySlowPositive
+                    //Servo muss langsam in y-Richtung bewegt werden.
                     moveDegreeY = -3;
                 } else {
                     //yFastPositive
+                    //Servo muss schnell in y-Richtung bewegt werden.
                     moveDegreeY = -6;
                 }
             }
-
+            //Wenn die Bewegung möglich ist, wird der aktuelle Winkel aktualisiert.
             if (servo.degreeToPw(currentDegreeX + moveDegreeX,
                                  currentDegreeY + moveDegreeY) != 0) {
                 currentDegreeX = currentDegreeX + moveDegreeX;
@@ -114,5 +119,7 @@ int main() {
 
             cout << endl;
         }
+
+        i++;
     }
 }

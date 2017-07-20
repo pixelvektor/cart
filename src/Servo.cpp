@@ -14,7 +14,9 @@ int minPwY = 1100;
 int SERVO_X = 20;
 int SERVO_Y = 26;
 
-/* Initialising pigpio and sets servos zo zero position. */
+/** Initialisiert pigpio und setzt die Servos auf die Ausgangsposition.
+ * @return int mit dem Erfolg.
+ */
 int Servo::initialiseServo() {
     if (gpioInitialise() < 0) {
         cout << "ERROR initializing!" << endl;
@@ -27,7 +29,11 @@ int Servo::initialiseServo() {
     }
 }
 
-/* Converts degree to pulsewidth. */
+/** Wandelt die Gradzahlen in Pulsweite um.
+ * @param degreeX Grad der Veränderung in x-Richtung.
+ * @param degreeY Grad der Veränderung in y-Richtung.
+ * @return ob die Bewegung möglich ist.
+ */
 int Servo::degreeToPw(int degreeX, int degreeY) {
     cout << "degreeX: "
          << degreeX
@@ -39,21 +45,23 @@ int Servo::degreeToPw(int degreeX, int degreeY) {
     int oneDegY = rangeY / 48;
     int resultX = minPwX + (oneDegX * degreeX);
     int resultY = minPwY + (oneDegY * degreeY);
-    //Stops the servo from going too far.
-    if (resultX >= minPwX && resultX <= maxPwX)
+    //Verhindert dass der Servo außerhalb seiner Grenzen fährt.
+    if (resultX >= minPwX && resultX <= maxPwX && resultY >= minPwY && resultY <= maxPwY){
         moveServo(SERVO_X, resultX);
 
-    if (resultY >= minPwY && resultY <= maxPwY)
+    //if (resultY >= minPwY && resultY <= maxPwY)
         moveServo(SERVO_Y, resultY);
-//        return 1;
-//    } else {
+        return 1;
+    } else {
         return 0;
-//    }
+    }
 }
 
-/* Moves the servo to given pulsewidth. */
+/** Bewegt den Servo auf die gegebene Pulsweite.
+ * @param servo Der Servo der angesteuert wird.
+ * @param pw Die Pulsweite die angelegt wird.
+ */
 void Servo::moveServo(int servo, int pw) {
-    /* position servo */
     gpioServo(servo, pw);
     cout << "Servo: "
          << servo

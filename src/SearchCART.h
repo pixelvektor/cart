@@ -15,6 +15,7 @@ using namespace std;
 class SearchCART
 {
 private:
+    bool connected = false;
     int initVideo();
     VideoCapture capture;
 public:
@@ -23,7 +24,6 @@ public:
     vector<int> loader(int i);
     vector<int> getSize();
     double getFPS();
-    double getFC();
     bool isConnected();
 };
 
