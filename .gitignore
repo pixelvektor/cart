@@ -15,6 +15,7 @@
 !*.c
 !*.py
 !*.h
+!*.png
 
 # ignore paths explicit
 cmake-build-debug
