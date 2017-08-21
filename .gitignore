@@ -18,6 +18,7 @@
 !*.png
 !*.jpg
 !*.pdf
+!makefile
 
 # ignore paths explicit
 cmake-build-debug
